@@ -13,16 +13,16 @@ onload = function(){
     let bet = sliderB.value;
     let gam = sliderC.value;
 
-    sliderA.addEventListener("input", update );
-    sliderB.addEventListener("input", update );
-    sliderC.addEventListener("input", update );
+    //sliderA.addEventListener("input", update );
+    //sliderB.addEventListener("input", update );
+    //sliderC.addEventListener("input", update );
 
-    //window.addEventListener("deviceorientation", function(e){
-    //    alp = ( e.alpha || 0);
-    //    bet = ( e.beta  || 0);
-    //    gam = ( e.gamma || 0);
-    //    update();
-    //});
+    window.addEventListener("deviceorientation", function(e){
+        alp = ( e.alpha || 0);
+        bet = ( e.beta  || 0);
+        gam = ( e.gamma || 0);
+        update();
+    });
 
 
     let canvas1 = document.getElementById('canvas');
@@ -225,9 +225,9 @@ onload = function(){
 
     function update(){
 
-        alp = sliderA.value;
-        bet = sliderB.value;
-        gam = sliderC.value;
+        //alp = sliderA.value;
+        //bet = sliderB.value;
+        //gam = sliderC.value;
 
         view1.alp = alp;
         view1.bet = bet;
@@ -266,7 +266,7 @@ function SceneView( canvas ){
 
     //
     //-------------------
-    //    ’nŒ`
+    //    Â’nÂŒ`
     //-------------------
 
     glView.addGeomObje( 'geom' );
@@ -281,7 +281,7 @@ function SceneView( canvas ){
 
     //
     //-------------------
-    //    ‹ó`
+    //    Â‹Ã³Â`
     //-------------------
 
     var color =  [ 0.1, 0.1, 0.1,1.0,  0.5, 0.5, 0.0,1.0,  0.0, 0.0, 0.0, 1.0, 50]
@@ -412,7 +412,7 @@ function calcMat( alp, bet, gam ){
 
 //--------------------------------------------------------
 //
-//	”ŠwŠÖ”
+//	ÂÂ”ÂŠwÂŠÃ–ÂÂ”
 //
 //--------------------------------------------------------
 
