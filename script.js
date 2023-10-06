@@ -1,4 +1,3 @@
-
 var sFn = new SimFunc();
 
 onload = function(){
@@ -13,9 +12,9 @@ onload = function(){
     let bet = sliderB.value;
     let gam = sliderC.value;
 
-    //sliderA.addEventListener("input", update );
-    //sliderB.addEventListener("input", update );
-    //sliderC.addEventListener("input", update );
+    sliderA.addEventListener("input", update );
+    sliderB.addEventListener("input", update );
+    sliderC.addEventListener("input", update );
 
     window.addEventListener("deviceorientation", function(e){
         alp = ( e.alpha || 0);
@@ -28,10 +27,12 @@ onload = function(){
     let canvas1 = document.getElementById('canvas');
     let view1 = new SceneView( canvas1 );
 
-
-
     let canvas2 = document.getElementById("canvas2");
     let ctx = canvas2.getContext("2d");
+
+    canvas2.setAttribute("width", screen.width );
+    canvas2.setAttribute("height", screen.height );
+
 
     let fovy = 90.0;
 
@@ -42,20 +43,50 @@ onload = function(){
 
 
 
-    function xx(){
-        update();
-    }
-    setTimeout(xx, 10);
-
-
     window.addEventListener( 'resize', ()=>{
+        console.log( 'resize Event' );
+
+        resize();
+
+} )
+
+
+    function resize(){
+        //console.log( 'resize' );
 
         view1.resize();
 
-        canvas2.setAttribute("width", window.innerWidth )
-        canvas2.setAttribute("height", window.innerHeight )
+        canvas2.setAttribute("width", screen.width );
+        canvas2.setAttribute("height", screen.height );
 
-} )
+        //console.log( 'canvas1 : ',canvas1.width, canvas1.height  )
+        //console.log( 'canvas2 : ',canvas2.width, canvas2.height  )
+        //console.log( 'screen  : ', screen.width, screen.height  )
+
+    }
+
+
+    function update(){
+        //console.log( 'update' );
+
+        //alp = sliderA.value;
+        //bet = sliderB.value;
+        //gam = sliderC.value;
+
+        view1.alp = alp;
+        view1.bet = bet;
+        view1.gam = gam;
+
+        view1.update();
+
+    }
+
+
+    function xx(){
+        update();
+        resize();
+    }
+    setTimeout(xx, 100);
 
 
 
@@ -223,19 +254,6 @@ onload = function(){
 
 
 
-    function update(){
-
-        //alp = sliderA.value;
-        //bet = sliderB.value;
-        //gam = sliderC.value;
-
-        view1.alp = alp;
-        view1.bet = bet;
-        view1.gam = gam;
-
-        view1.update();
-
-    }
 
 }
 
@@ -252,8 +270,16 @@ function SceneView( canvas ){
     canvas.height = canvas.clientHeight;
 
     glView.numViews = 1;
-    glView.viewport = [ [ 0, 0, canvas.width, canvas.height ] ];
     glView.viewFov  = [ 90 ];
+
+    glView.viewport = [ [ 0, 0, canvas.width, canvas.height ] ];
+
+    //let x = 0.1 * glView.canvas.width
+    //let y = 0.1 * glView.canvas.height
+    //let w = 0.8 * glView.canvas.width
+    //let h = 0.8 * glView.canvas.height
+    //glView.viewport = [ [ x, y, w, h ] ];
+
 
     var e = [     0.0,     0.0, 5000.0 ];
     var t = [  9000.0,  9000.0, 5000.0 ];
@@ -266,7 +292,7 @@ function SceneView( canvas ){
 
     //
     //-------------------
-    //    n`
+    //    地形
     //-------------------
 
     glView.addGeomObje( 'geom' );
@@ -281,7 +307,7 @@ function SceneView( canvas ){
 
     //
     //-------------------
-    //    ó`
+    //    空港
     //-------------------
 
     var color =  [ 0.1, 0.1, 0.1,1.0,  0.5, 0.5, 0.0,1.0,  0.0, 0.0, 0.0, 1.0, 50]
@@ -313,28 +339,34 @@ function SceneView( canvas ){
 }
 
 SceneView.prototype.resize = function(){
-    //console.log( 'resize' );
+    //console.log( 'resize SceneView' );
 
     //console.log( this.canvas.clientWidth, this.canvas.clientHeight );
     //console.log( this.glView.viewport );
-
     this.canvas.width = this.canvas.clientWidth;
     this.canvas.height = this.canvas.clientHeight;
+
+    //console.log( this.canvas.width, this.canvas.height );
 
 
     this.glView.viewport = [ [ 0, 0, this.canvas.width, this.canvas.height ] ];
 
+    //let x = 0.1 * this.canvas.width
+    //let y = 0.1 * this.canvas.height
+    //let w = 0.8 * this.canvas.width
+    //let h = 0.8 * this.canvas.height
+    //this.glView.viewport = [ [ x, y, w, h ] ];
+
     this.update();
-
-
-
 
 }
 
 
 SceneView.prototype.update = function(){
 
-    //console.log('update');
+    //console.log('update SceneView');
+    //console.log( this.alp, this.bet, this.gam );
+
 
     let glView = this.glView;
 
@@ -412,7 +444,7 @@ function calcMat( alp, bet, gam ){
 
 //--------------------------------------------------------
 //
-//	wÖ
+//	数学関数
 //
 //--------------------------------------------------------
 
@@ -771,6 +803,5 @@ function base64ToArrayBuffer(base64) {
   }
   return bytes.buffer;
 }
-
 
 
